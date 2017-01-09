@@ -454,7 +454,9 @@
                 [weatherView.activityIndicator startAnimating];
                 
                 //  Initiate download request
-                [[SOLWundergroundDownloader sharedDownloader]dataForLocation:[locations lastObject] withTag:weatherView.tag completion:^(SOLWeatherData *data, NSError *error) {
+                CLLocation *testLocationNY = [[CLLocation alloc] initWithLatitude:40.7143528 longitude:-74.0059731];
+                // [locations lastObject]
+                [[SOLWundergroundDownloader sharedDownloader]dataForLocation:testLocationNY withTag:weatherView.tag completion:^(SOLWeatherData *data, NSError *error) {
                     
                     if (data) {
                         // Success

@@ -45,6 +45,8 @@
         NSString *path = [[NSBundle mainBundle]pathForResource:@"API_KEY" ofType:@""];
         NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
         NSString *apiKey = [content stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+        // http://www.wunderground.com/weather/api
+        //NSString *apiKey =  @"faa25135ff44f9d5";
         sharedDownloader = [[SOLWundergroundDownloader alloc]initWithAPIKey:apiKey];
     });
     return sharedDownloader;
