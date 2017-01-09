@@ -45,5 +45,9 @@
         <key>NSAllowsArbitraryLoads</key>
         <true/>
     </dict>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>仅用于模拟定位打卡功能, 不会收集您的任何隐私信息</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>仅用于模拟定位打卡功能, 不会收集您的任何隐私信息</string>
 </dict>
 </plist>

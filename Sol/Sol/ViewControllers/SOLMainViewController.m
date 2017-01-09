@@ -420,8 +420,20 @@
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
+    // resolve location privacy problem by SW 2017.1.9
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined:
+            if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+                
+                [self.locationManager requestWhenInUseAuthorization];
+            }
+            break;
+        default:
+            break;
+    }
     //  Only add the local weather view if location services authorized
-    if(status == kCLAuthorizationStatusAuthorized) {
+    
+    if(status == kCLAuthorizationStatusAuthorized || status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusAuthorizedAlways) {
         [self initializeLocalWeatherView];
         [self initializeNonlocalWeatherViews];
         [self setBlurredOverlayImage];
@@ -454,9 +466,7 @@
                 [weatherView.activityIndicator startAnimating];
                 
                 //  Initiate download request
-                CLLocation *testLocationNY = [[CLLocation alloc] initWithLatitude:40.7143528 longitude:-74.0059731];
-                // [locations lastObject]
-                [[SOLWundergroundDownloader sharedDownloader]dataForLocation:testLocationNY withTag:weatherView.tag completion:^(SOLWeatherData *data, NSError *error) {
+                [[SOLWundergroundDownloader sharedDownloader]dataForLocation:[locations lastObject] withTag:weatherView.tag completion:^(SOLWeatherData *data, NSError *error) {
                     
                     if (data) {
                         // Success
